@@ -3,6 +3,33 @@ package org.goodmath.apog
 import org.scalatest._
 
 class RopeSuite extends FunSuite {
+  def createJaggedLetterRope: Rope =
+    Rope.create(buildTestString('a', 23, 50))
+      .concat(Rope.create(buildTestString('b', 17, 50)))
+      .concat(Rope.create(buildTestString('c', 19, 50)))
+      .concat(Rope.create(buildTestString('d', 13, 50)))
+      .concat(Rope.create(buildTestString('e', 29, 50)))
+      .concat(Rope.create(buildTestString('f', 31, 50)))
+      .concat(Rope.create(buildTestString('g', 37, 50)))
+
+  def createJaggedNumberRope: Rope =
+    Rope.create("1111111111\n")
+      .concat(Rope.create("222222222222222\n"))
+      .concat(Rope.create("33333333\n"))
+      .concat(Rope.create("4444444444444\n"))
+      .concat(Rope.create("5555555555555555555\n"))
+      .concat(Rope.create("666666\n"))
+      .concat(Rope.create("7777777777777777\n"))
+
+  def createRectNumberRope: Rope =
+    Rope.create("1111111111")
+      .concat(Rope.create("2222222222"))
+      .concat(Rope.create("3333333333"))
+      .concat(Rope.create("4444444444"))
+      .concat(Rope.create("5555555555"))
+      .concat(Rope.create("6666666666"))
+      .concat(Rope.create("7777777777"))
+
   test("short ropes should merge on concat") {
     val r = Rope.create("hello ")
     val s = Rope.create("world")
@@ -33,14 +60,7 @@ class RopeSuite extends FunSuite {
   }
 
   test("chars should be retrievable by position") {
-    val a = Rope.create(buildTestString('a', 23, 50))
-    val b = Rope.create(buildTestString('b', 17, 50))
-    val c = Rope.create(buildTestString('c', 19, 50))
-    val d = Rope.create(buildTestString('d', 13, 50))
-    val e = Rope.create(buildTestString('e', 29, 50))
-    val f = Rope.create(buildTestString('f', 31, 50))
-    val g = Rope.create(buildTestString('g', 37, 50))
-    val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
+    val all = createJaggedLetterRope
     assert('a' == all.char_at(0).get)
     assert('a' == all.char_at(1).get)
     assert('a' ==  all.char_at(8).get)
@@ -89,87 +109,88 @@ class RopeSuite extends FunSuite {
   }
 
     test("a rope should be splittable into subropes") {
-      val a = Rope.create("1111111111")
-      val b = Rope.create("2222222222")
-      val c = Rope.create("3333333333")
-      val d = Rope.create("4444444444")
-      val e = Rope.create("5555555555")
-      val f = Rope.create("6666666666")
-      val g = Rope.create("7777777777")
-      val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
+      val all = createRectNumberRope
 
       val sp = all.split(21)
       assert(sp.isDefined)
       sp.foreach { case (before, after) =>
         assert("111111111122222222223" == before.toString)
         assert("3333333334444444444555555555566666666667777777777" == after.toString)
-        assert("1111111111222222222233333333334444444444555555555566666666667777777777" == all.toString)
-
-        assert("(I: (I: (L: '1111111111'), (L: '2222222222')), (L: '3'))" == before.inspect)
-        assert("(I: (I: (I: (L: '3333333334444444444'), (L: '5555555555')), (L: '6666666666')), (L: '7777777777'))" ==
+        assert("1111111111222222222233333333334444444444555555555566666666667777777777" ==
+          all.toString)
+        assert("(L: '111111111122222222223')" == before.inspect)
+        assert("(I: (L: '333333333444444444455555555556666666666'), (L: '7777777777'))" ==
           after.inspect)
         assert(all.toString == before.concat(after).toString)
       }
     }
 
   test("You should be able to insert into the middle of a rope") {
-    val a = Rope.create("1111111111")
-    val b = Rope.create("2222222222")
-    val c = Rope.create("3333333333")
-    val d = Rope.create("4444444444")
-    val e = Rope.create("5555555555")
-    val f = Rope.create("6666666666")
-    val g = Rope.create("7777777777")
-    val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
+    val all = createRectNumberRope
     val res = all.insert_at(Rope.create("abc"), 13)
     assert(res.isDefined)
     res.foreach { newr =>
-      assert("1111111111222abc222222233333333334444444444555555555566666666667777777777" == newr.toString)
-      assert("1111111111222222222233333333334444444444555555555566666666667777777777" == all.toString)
+      assert("1111111111222abc222222233333333334444444444555555555566666666667777777777" ==
+        newr.toString)
+      assert("1111111111222222222233333333334444444444555555555566666666667777777777" ==
+        all.toString)
     }
   }
 
   test("Multiple splits shouldn't interfere with each other") {
-    val a = Rope.create("1111111111")
-    val b = Rope.create("222222222222222")
-    val c = Rope.create("33333333")
-    val d = Rope.create("4444444444444")
-    val e = Rope.create("5555555555555555555")
-    val f = Rope.create("666666")
-    val g = Rope.create("7777777777777777")
-    val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
+    val all = createJaggedNumberRope
     val firstSplit = all.split(23)
     assert(firstSplit.isDefined)
     firstSplit.foreach { case (begin, end) =>
-      assert("11111111112222222222222" == begin.toString)
-      assert("2233333333444444444444455555555555555555556666667777777777777777" == end.toString)
+      assert("1111111111\n222222222222" == begin.toString)
+      assert("222\n33333333\n4444444444444\n5555555555555555555\n666666\n7777777777777777\n" ==
+        end.toString)
     }
     val secondSplit = all.split(41)
     assert(secondSplit.isDefined)
     secondSplit.foreach { case (begin, end) =>
-      assert("11111111112222222222222223333333344444444" == begin.toString)
-      assert("4444455555555555555555556666667777777777777777" == end.toString)
+      assert("1111111111\n222222222222222\n33333333\n44444" == begin.toString)
+      assert("44444444\n5555555555555555555\n666666\n7777777777777777\n" == end.toString)
     }
     val thirdSplit = all.split(52)
     assert(thirdSplit.isDefined)
     thirdSplit.map { case (begin, end) =>
-      assert("1111111111222222222222222333333334444444444444555555" == begin.toString)
-      assert("55555555555556666667777777777777777" == end.toString)
+      assert("1111111111\n222222222222222\n33333333\n4444444444444\n55" == begin.toString)
+      assert("55555555555555555\n666666\n7777777777777777\n" == end.toString)
 
     }
-    assert("111111111122222222222222233333333444444444444455555555555555555556666667777777777777777" ==
+    assert(("1111111111\n222222222222222\n33333333\n4444444444444\n" +
+            "5555555555555555555\n666666\n7777777777777777\n") ==
+      all.toString)
+  }
+
+  test("You should be able to split the result of a split") {
+    val all = createJaggedNumberRope
+    val firstSplit = all.split(23)
+    assert(firstSplit.isDefined)
+    firstSplit.foreach { case (begin, end) =>
+      assert("1111111111\n222222222222" == begin.toString)
+      assert("222\n33333333\n4444444444444\n5555555555555555555\n666666\n7777777777777777\n" ==
+        end.toString)
+    }
+    val (fPre, fPost) = firstSplit.get
+    val secondSplit = fPre.split(12)
+    assert(secondSplit.isDefined)
+    val (sPre, sPost) = secondSplit.get
+    assert("1111111111\n2" == sPre.toString)
+    assert("22222222222" == sPost.toString)
+    val thirdSplit = fPost.split(19)
+    assert(thirdSplit.isDefined)
+    val (tPre, tPost) = thirdSplit.get
+    assert("222\n33333333\n444444" == tPre.toString)
+    assert("4444444\n5555555555555555555\n666666\n7777777777777777\n" == tPost.toString)
+    assert(("1111111111\n222222222222222\n33333333\n4444444444444\n" +
+      "5555555555555555555\n666666\n7777777777777777\n") ==
       all.toString)
   }
 
   test("you should be able to cut a section out of a rope") {
-    val a = Rope.create("1111111111")
-    val b = Rope.create("2222222222")
-    val c = Rope.create("3333333333")
-    val d = Rope.create("4444444444")
-    val e = Rope.create("5555555555")
-    val f = Rope.create("6666666666")
-    val g = Rope.create("7777777777")
-    val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
+    val all = createRectNumberRope
     val res = all.delete_range(22, 48)
     assert(res.isDefined)
     res.foreach { case (cut, rest) =>
@@ -179,14 +200,7 @@ class RopeSuite extends FunSuite {
   }
 
   test("You should be able to copy sections of a rope") {
-    val a = Rope.create("1111111111")
-    val b = Rope.create("2222222222")
-    val c = Rope.create("3333333333")
-    val d = Rope.create("4444444444")
-    val e = Rope.create("5555555555")
-    val f = Rope.create("6666666666")
-    val g = Rope.create("7777777777")
-    val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
+    val all = createRectNumberRope
     val copy = all.get_range(22, 48)
     assert(copy.isDefined)
     copy.foreach { r =>
@@ -205,54 +219,59 @@ class RopeSuite extends FunSuite {
     val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
     assert(30 == all.number_of_newlines)
     val lines = (0 until 30).map(i => all.position_of_line(i).get)
-    val expected = Array(0, 11, 22, 33, 44, 55, 66, 77, 88, 99, 110, 131, 152, 173, 194, 215, 236, 257, 278,
-      299, 320, 351, 382, 413, 444, 475, 506, 537, 568, 599)
+    val expected = Array(0, 11, 22, 33, 44, 55, 66, 77, 88, 99, 110, 131, 152, 173, 194,
+      215, 236, 257, 278, 299, 320, 351, 382, 413, 444, 475, 506, 537, 568, 599)
     for (i <- 0 until 30) {
       assert(expected(i) == lines(i))
     }
   }
 
   test("You should be able to figure out how long lines are") {
-    val a = Rope.create("1111111111\n") // 0-11
-    val b = Rope.create("222222222222222\n") // 11-27
-    val c = Rope.create("33333333\n") // 27-36
-    val d = Rope.create("4444444444444\n") // 36-49
-    val e = Rope.create("5555555555555555555\n") // 49-69
-    val f = Rope.create("666666\n") // 69-76
-    val g = Rope.create("7777777777777777\n") // 76-
-    val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
-    assert(10 == all.length_of_line(0).get)
-    assert(15 ==  all.length_of_line(1).get)
-    assert(8 ==  all.length_of_line(2).get)
-    assert(13 == all.length_of_line(3).get)
-    assert(19 ==  all.length_of_line(4).get)
-    assert(6 == all.length_of_line(5).get)
-    assert(16 == all.length_of_line(6).get)
+    val all = createJaggedNumberRope
+    assert(11 == all.length_of_line(0).get)
+    assert(16 ==  all.length_of_line(1).get)
+    assert(9 ==  all.length_of_line(2).get)
+    assert(14 == all.length_of_line(3).get)
+    assert(20 ==  all.length_of_line(4).get)
+    assert(7 == all.length_of_line(5).get)
+    assert(17 == all.length_of_line(6).get)
     assert(all.length_of_line(7).isEmpty)
     assert(all.length_of_line(8).isEmpty)
   }
 
   test("you should be able to figure out what line you're on") {
-    val a = Rope.create("1111111111\n")  // 0-11
-    val b = Rope.create("222222222222222\n") // 11-27
-    val c = Rope.create("33333333\n") // 27-36
-    val d = Rope.create("4444444444444\n") // 36-49
-    val e = Rope.create("5555555555555555555\n") // 49-69
-    val f = Rope.create("666666\n") // 69-76
-    val g = Rope.create("7777777777777777\n") // 76-
-    val all = a.concat(b).concat(c).concat(d).concat(e).concat(f).concat(g)
-    assert(1 == all.line_for_position(0).get)
-    assert(1 == all.line_for_position(9).get)
-    assert(1 == all.line_for_position(10).get)
-    assert(2 == all.line_for_position(11).get)
-    assert(2 == all.line_for_position(21).get)
-    assert(3 == all.line_for_position(29).get)
-    assert(4 == all.line_for_position(44).get)
-    assert(5 == all.line_for_position(54).get)
-    assert(6 == all.line_for_position(70).get)
-    assert(7 == all.line_for_position(80).get)
-    assert(7 == all.line_for_position(92).get)
+    val all = createJaggedNumberRope
+    assert(0 == all.line_for_position(0).get)
+    assert(0 == all.line_for_position(9).get)
+    assert(0 == all.line_for_position(10).get)
+    assert(1 == all.line_for_position(11).get)
+    assert(1 == all.line_for_position(21).get)
+    assert(2 == all.line_for_position(29).get)
+    assert(3 == all.line_for_position(44).get)
+    assert(4 == all.line_for_position(54).get)
+    assert(5 == all.line_for_position(70).get)
+    assert(6 == all.line_for_position(80).get)
+    assert(6 == all.line_for_position(92).get)
     assert(all.line_for_position(99).isEmpty)
   }
 
+  test("you should be able to do character inserts in-place sometimes") {
+    val orig = Rope.create("this is a string of test data")
+    val one = orig.insert_char('!', 11)
+    assert(one.isDefined)
+    assert("(I: (L: 'this is a s!'), (L: 'tring of test data'))" == one.get.inspect)
+    val two = one.get.insert_char('@', 12)
+    assert(two.isDefined)
+    assert("(I: (L: 'this is a s!@'), (L: 'tring of test data'))" == two.get.inspect)
+    // Do another insert - this should work in-place.
+    val three = one.get.insert_char('#', 13)
+    assert(three.isDefined)
+    assert("(I: (L: 'this is a s!@#'), (L: 'tring of test data'))" == three.get.inspect)
+    assert(two.get == three.get)
+    // This one shouldn't work in-place.
+    val four = three.get.insert_char('$', 11)
+    assert(four.isDefined)
+    assert("(I: (L: 'this is a s$!@#'), (L: 'tring of test data'))" == four.get.inspect)
+    assert(four != three)
+  }
 }

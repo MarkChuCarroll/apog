@@ -1,5 +1,7 @@
 package org.goodmath.apog
 
+import scala.collection.mutable.ArrayBuffer
+
 /** A rope is a representation for a sequence of characters for a text editor.
   * It's a binary tree of text, with the actual text in the leaves.
   */
@@ -12,20 +14,26 @@ abstract class Rope {
 
   /**
     * Concatenate this rope with another.
-    * @param r
+    * @param r the rope to add.
     * @return the new rope.
     */
   def concat(r: Rope): Rope = {
     if (length + r.length < SMALL_ROPE) {
       new LeafNode(toString + r.toString)
-    } else {
+    } else if (depth <= 4*r.depth && r.depth <= 4*depth) {
+      // If the new rope would reasonably balanced, then go ahead and created
+      // an internal node.
       new InternalNode(this, r)
+    } else {
+      // If the new rope would be badly out of balance, then start from scratch with
+      // a balanced tree.
+      Rope.create(this.toString + r.toString)
     }
   }
 
   /**
     * Split a rope at a position. The original rope will be unmodified.
-    * @param pos
+    * @param pos the position of the split
     * @return an optional pair of the before split and after split ropes; None if the
     *         position comes after the end of the rope.
     */
@@ -33,7 +41,7 @@ abstract class Rope {
 
   /**
     * Get the character at a position.
-    * @param pos
+    * @param pos the position to insert at.
     * @return the character, or None if the position is after the end of the rope.
     */
   def char_at(pos: Int): Option[Char]
@@ -49,6 +57,17 @@ abstract class Rope {
       before.concat(r).concat(after)
     }
   }
+
+  /**
+    * Insert a character into the string. If it's at the end of a leaf, then the insert
+    * should happen in place.
+    * @param c the character to insert.
+    * @param pos the position to insert it at.
+    * @return An option wrapping the updated rope. This could be either a new rope (if the update couldn't
+    *         be done in place), or the same rope (if it could happen in-place). If the position is invalid,
+    *         then return None.
+    */
+  def insert_char(c: Char, pos: Int): Option[Rope]
 
   /**
     * Remove a chunk of text from a rope.
@@ -120,8 +139,6 @@ abstract class Rope {
     * Generate a string describing the rope for testing/debugging.
     */
   def inspect: String
-
-
 }
 
 object Rope {
@@ -145,9 +162,9 @@ object Rope {
 }
 
 class InternalNode(val left: Rope, val right: Rope) extends Rope {
-  override def length = left.length + right.length
-  override def number_of_newlines = left.number_of_newlines + right.number_of_newlines
-  override def depth = math.max(left.depth, right.depth) + 1
+  override def length: Int = left.length + right.length
+  override def number_of_newlines: Int = left.number_of_newlines + right.number_of_newlines
+  override def depth: Int = math.max(left.depth, right.depth) + 1
 
   def char_at(pos: Int): Option[Char] = {
     if (pos < left.length) {
@@ -170,8 +187,8 @@ class InternalNode(val left: Rope, val right: Rope) extends Rope {
   }
 
   def get_range(start: Int, end: Int): Option[Rope] = {
-    split(start).flatMap { case (before, remainder) =>
-      remainder.split(end - start).map { case (cut, after) => cut }
+    split(start).flatMap { case (_, remainder) =>
+      remainder.split(end - start).map { case (cut, _) => cut }
     }
   }
 
@@ -198,12 +215,41 @@ class InternalNode(val left: Rope, val right: Rope) extends Rope {
       right.line_for_position(pos - left.length).map(l => left.number_of_newlines + l)
     }
   }
+
+  def insert_char(c: Char, pos: Int): Option[Rope] = {
+    if (pos <= left.length) {
+      left.insert_char(c, pos).map { newLeft =>
+        if (newLeft == left) {
+          // If we were able to insert in-place, then we just return this.
+          this
+        } else {
+          // If we couldn't insert in-place, then we need to update.
+          newLeft.concat(right)
+        }
+      }
+    } else {
+      right.insert_char(c, pos - left.length).map { newRight =>
+        if (newRight == right) {
+          this
+        } else {
+          left.concat(newRight)
+        }
+      }
+    }
+  }
 }
 
-class LeafNode(val contents: String) extends Rope {
-  override def length = contents.length()
-  override def number_of_newlines = contents.count(c => c == '\n')
-  override val depth = 1
+class LeafNode(val contentStr: String) extends Rope {
+
+  val contents = new ArrayBuffer[Char](contentStr.length * 2)
+  contentStr.foreach { c => contents.append(c) }
+
+  override def length: Int = contents.length()
+
+  override def number_of_newlines: Int = contents.count(c => c == '\n')
+
+  override val depth: Int = 1
+
   override def char_at(pos: Int): Option[Char] = {
     if (pos < length) {
       Some(contents.charAt(pos))
@@ -212,13 +258,13 @@ class LeafNode(val contents: String) extends Rope {
     }
 
   }
-  
+
   def split(pos: Int): Option[(Rope, Rope)] = {
     if (pos > length) {
       None
     } else {
-      Some((Rope.create(contents.substring(0, pos)),
-            Rope.create(contents.substring(pos))))
+      Some((Rope.create(contents.subSequence(0, pos).toString),
+            Rope.create(contents.subSequence(pos, length).toString)))
     }
   }
 
@@ -226,13 +272,13 @@ class LeafNode(val contents: String) extends Rope {
     if (start < 0 || start >= end || end >= length) {
       None
     } else {
-      Some(Rope.create(contents.substring(start, end)))
+      Some(Rope.create(contents.subSequence(start, end).toString))
     }
   }
 
-  override def inspect: String = "(L: '" + contents + "')"
+  override def inspect: String = "(L: '" + contents.mkString + "')"
 
-  override def toString: String = contents
+  override def toString: String = contents.mkString
 
   override def position_of_line(line: Int): Option[Int] = {
     if (line > number_of_newlines) {
@@ -255,6 +301,19 @@ class LeafNode(val contents: String) extends Rope {
     if (pos > length) { None }
     else {
       split(pos).map { case (before, _) => before.number_of_newlines }
+    }
+  }
+
+  override def insert_char(c: Char, pos: Int): Option[Rope] = {
+    if (pos > length) {
+      None
+    } else if (pos == length) {
+      contents.append(c)
+      Some(this)
+    } else {
+      split(pos).flatMap { case (before, after) =>
+        before.insert_char(c, pos).map {n => n.concat(after)}
+      }
     }
   }
 }
