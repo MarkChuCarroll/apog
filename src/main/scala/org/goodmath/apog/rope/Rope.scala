@@ -1,12 +1,14 @@
-package org.goodmath.apog
+package org.goodmath.apog.rope
 
 import scala.collection.mutable.ArrayBuffer
 
-/** A rope is a representation for a sequence of characters for a text editor.
+/**
+  * A rope is a representation for a sequence of characters for a text editor.
   * It's a binary tree of text, with the actual text in the leaves.
   */
 abstract class Rope {
-  /** The small rope size: if you concatenate two strings whose combined
+  /**
+    * The small rope size: if you concatenate two strings whose combined
     * length is less than SMALL_ROPE, then the strings will be copied and
     * merged into a single leaf node, instead of creating an internal node.
     */
@@ -44,7 +46,7 @@ abstract class Rope {
     * @param pos the position to insert at.
     * @return the character, or None if the position is after the end of the rope.
     */
-  def char_at(pos: Int): Option[Char]
+  def charAt(pos: Int): Option[Char]
 
   /**
     * Insert a chunk of text into a rope.
@@ -52,7 +54,7 @@ abstract class Rope {
     * @param pos the position of the insert.
     * @return a new rope with the text inserted, or None if the position was invalid.
     */
-  def insert_at(r: Rope, pos: Int): Option[Rope] = {
+  def insertAt(r: Rope, pos: Int): Option[Rope] = {
     split(pos).map { case (before, after) =>
       before.concat(r).concat(after)
     }
@@ -67,7 +69,7 @@ abstract class Rope {
     *         be done in place), or the same rope (if it could happen in-place). If the position is invalid,
     *         then return None.
     */
-  def insert_char(c: Char, pos: Int): Option[Rope]
+  def insertChar(c: Char, pos: Int): Option[Rope]
 
   /**
     * Remove a chunk of text from a rope.
@@ -76,7 +78,7 @@ abstract class Rope {
     * @return a pair containing (cut text, rope with the cut text removed),
     *         or None if either position was invalid.
     */
-  def delete_range(start: Int, end: Int): Option[(Rope, Rope)] = {
+  def deleteRange(start: Int, end: Int): Option[(Rope, Rope)] = {
     if (end <= start) {
       None
     } else {
@@ -94,16 +96,17 @@ abstract class Rope {
     * @param end the end of the region to copy.
     * @return the copied text, or None if either position was invalid.
     */
-  def get_range(start: Int, end: Int): Option[Rope]
+  def getRange(start: Int, end: Int): Option[Rope]
 
-  /** Get the number of characters in a rope.
+  /**
+    * Get the number of characters in a rope.
     */
   def length: Int
 
   /**
     * Get the number of newlines in a rope.
     */
-  def number_of_newlines: Int
+  def numberOfNewlines: Int
 
   /**
     * Get the tree-depth of a rope.
@@ -115,16 +118,35 @@ abstract class Rope {
     * @param line the line number
     * @return the position, or None if the position is invalid.
     */
-  def position_of_line(line: Int): Option[Int]
+  def positionOfLine(line: Int): Option[Int]
+
+  def positionOfCoord(line: Int, col: Int): Option[Int] = {
+    positionOfLine(line).flatMap { startOfLine =>
+       lengthOfLine(line).flatMap { lineLength =>
+         if (col < lineLength)  {
+           Some(startOfLine + col)
+         } else {
+           None
+         }
+       }
+    }
+  }
+
+  def charAtCoord(line: Int, column: Int): Option[Char] = {
+    positionOfCoord(line, column).flatMap { pos =>
+      charAt(pos)
+    }
+  }
 
   /**
     * Get the length of a line, including the newline.
     * @param line the line number
     * @return the length of the line, or None if the line number is invalid.
     */
-  def length_of_line(line: Int): Option[Int] = {
-    position_of_line(line).flatMap(first =>
-      position_of_line(line + 1).map(second => second - first)
+  def lengthOfLine(line: Int): Option[Int] = {
+    // TODO: this doesn't work for the last line. And it includes the newline. Which? Maybe?
+    positionOfLine(line).flatMap(first =>
+      positionOfLine(line + 1).map(second => second - first)
     )
   }
 
@@ -133,7 +155,7 @@ abstract class Rope {
     * @param pos the position.
     * @return the line number containing the position, or None.
     */
-  def line_for_position(pos: Int): Option[Int]
+  def lineOfPosition(pos: Int): Option[Int]
 
   /**
     * Generate a string describing the rope for testing/debugging.
@@ -163,14 +185,16 @@ object Rope {
 
 class InternalNode(val left: Rope, val right: Rope) extends Rope {
   override def length: Int = left.length + right.length
-  override def number_of_newlines: Int = left.number_of_newlines + right.number_of_newlines
+
+  override def numberOfNewlines: Int = left.numberOfNewlines + right.numberOfNewlines
+
   override def depth: Int = math.max(left.depth, right.depth) + 1
 
-  def char_at(pos: Int): Option[Char] = {
+  def charAt(pos: Int): Option[Char] = {
     if (pos < left.length) {
-      left.char_at(pos)
+      left.charAt(pos)
     } else {
-      right.char_at(pos - left.length)
+      right.charAt(pos - left.length)
     }
   }
 
@@ -186,7 +210,7 @@ class InternalNode(val left: Rope, val right: Rope) extends Rope {
     }
   }
 
-  def get_range(start: Int, end: Int): Option[Rope] = {
+  def getRange(start: Int, end: Int): Option[Rope] = {
     split(start).flatMap { case (_, remainder) =>
       remainder.split(end - start).map { case (cut, _) => cut }
     }
@@ -198,27 +222,27 @@ class InternalNode(val left: Rope, val right: Rope) extends Rope {
 
   override def toString: String = left.toString + right.toString
 
-  override def position_of_line(line: Int): Option[Int] = {
+  override def positionOfLine(line: Int): Option[Int] = {
     if (line == 0) {
       Some(0)
-    } else if (line <= left.number_of_newlines) {
-      left.position_of_line(line)
+    } else if (line <= left.numberOfNewlines) {
+      left.positionOfLine(line)
     } else {
-      right.position_of_line(line - left.number_of_newlines).map(pos => pos + left.length)
+      right.positionOfLine(line - left.numberOfNewlines).map(pos => pos + left.length)
     }
   }
 
-  override def line_for_position(pos: Int): Option[Int] = {
+  override def lineOfPosition(pos: Int): Option[Int] = {
     if (pos < left.length) {
-      left.line_for_position(pos)
+      left.lineOfPosition(pos)
     } else {
-      right.line_for_position(pos - left.length).map(l => left.number_of_newlines + l)
+      right.lineOfPosition(pos - left.length).map(l => left.numberOfNewlines + l)
     }
   }
 
-  def insert_char(c: Char, pos: Int): Option[Rope] = {
+  def insertChar(c: Char, pos: Int): Option[Rope] = {
     if (pos <= left.length) {
-      left.insert_char(c, pos).map { newLeft =>
+      left.insertChar(c, pos).map { newLeft =>
         if (newLeft == left) {
           // If we were able to insert in-place, then we just return this.
           this
@@ -228,7 +252,7 @@ class InternalNode(val left: Rope, val right: Rope) extends Rope {
         }
       }
     } else {
-      right.insert_char(c, pos - left.length).map { newRight =>
+      right.insertChar(c, pos - left.length).map { newRight =>
         if (newRight == right) {
           this
         } else {
@@ -240,17 +264,16 @@ class InternalNode(val left: Rope, val right: Rope) extends Rope {
 }
 
 class LeafNode(val contentStr: String) extends Rope {
-
   val contents = new ArrayBuffer[Char](contentStr.length * 2)
   contentStr.foreach { c => contents.append(c) }
 
   override def length: Int = contents.length()
 
-  override def number_of_newlines: Int = contents.count(c => c == '\n')
+  override def numberOfNewlines: Int = contents.count(c => c == '\n')
 
   override val depth: Int = 1
 
-  override def char_at(pos: Int): Option[Char] = {
+  override def charAt(pos: Int): Option[Char] = {
     if (pos < length) {
       Some(contents.charAt(pos))
     } else {
@@ -268,7 +291,7 @@ class LeafNode(val contentStr: String) extends Rope {
     }
   }
 
-  def get_range(start: Int, end: Int): Option[Rope] = {
+  def getRange(start: Int, end: Int): Option[Rope] = {
     if (start < 0 || start >= end || end >= length) {
       None
     } else {
@@ -280,8 +303,10 @@ class LeafNode(val contentStr: String) extends Rope {
 
   override def toString: String = contents.mkString
 
-  override def position_of_line(line: Int): Option[Int] = {
-    if (line > number_of_newlines) {
+  override def positionOfLine(line: Int): Option[Int] = {
+    if (line == 0) {
+      Some(0)
+    } else if (line > numberOfNewlines) {
       None
     } else {
       var nls = 0
@@ -297,14 +322,14 @@ class LeafNode(val contentStr: String) extends Rope {
     }
   }
 
-  override def line_for_position(pos: Int): Option[Int] = {
+  override def lineOfPosition(pos: Int): Option[Int] = {
     if (pos > length) { None }
     else {
-      split(pos).map { case (before, _) => before.number_of_newlines }
+      split(pos).map { case (before, _) => before.numberOfNewlines }
     }
   }
 
-  override def insert_char(c: Char, pos: Int): Option[Rope] = {
+  override def insertChar(c: Char, pos: Int): Option[Rope] = {
     if (pos > length) {
       None
     } else if (pos == length) {
@@ -312,7 +337,7 @@ class LeafNode(val contentStr: String) extends Rope {
       Some(this)
     } else {
       split(pos).flatMap { case (before, after) =>
-        before.insert_char(c, pos).map {n => n.concat(after)}
+        before.insertChar(c, pos).map { n => n.concat(after)}
       }
     }
   }
