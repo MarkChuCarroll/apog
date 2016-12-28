@@ -56,5 +56,21 @@ class ScreenGridSuite extends FunSuite {
         "[ g e d   i n   l i n]\n" +
         "[ s s^n______________]\n" +
         "[ a t^n______________]\n") == s.inspect)
+
+    controller.render(2, 4)
+    assert((
+      "[ e s s^n____________]\n" +
+        "[ h a t^n____________]\n" +
+        "[ a n   s e e   w h a]\n" +
+        "[   w e   r e n d e r]\n") == s.inspect)
+
+    controller.render(4, 2)
+    assert((
+      "[   c a n   s e e   w]\n" +
+        "[ e n   w e   r e n d]\n" +
+        "[____________________]\n" +
+        "[____________________]\n") == s.inspect)
   }
+
+
 }

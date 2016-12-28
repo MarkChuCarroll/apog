@@ -10,13 +10,19 @@ trait ScreenGrid {
   def inspect: String
 }
 
+object ScreenGrid {
+  val NORMAL_TEXT = 0
+  val CONTROL = 1
+  val EMPTY = 10
+}
+
 class SimpleScreenGrid(rows: Int, columns: Int) extends ScreenGrid {
   val grid: Array[Array[(Char, Int)]] = Array.ofDim[(Char, Int)](rows, columns)
   for {
     row <- 0 until numLines
     col <- 0 until numColumns
   } {
-    grid(row)(col) = (' ', ScreenGridController.EMPTY)
+    grid(row)(col) = (' ', ScreenGrid.EMPTY)
   }
 
   override def numLines: Int = rows
@@ -34,11 +40,11 @@ class SimpleScreenGrid(rows: Int, columns: Int) extends ScreenGrid {
     grid.foreach {(row: Array[(Char, Int)]) =>
       s.append('[')
       row.foreach { case (c, st) =>
-        if (st ==  ScreenGridController.NORMAL_TEXT) {
+        if (st ==  ScreenGrid.NORMAL_TEXT) {
           s.append(" " + c)
-        } else if (st == ScreenGridController.CONTROL) {
+        } else if (st == ScreenGrid.CONTROL) {
           s.append("^" + c)
-        } else if (st == ScreenGridController.EMPTY) {
+        } else if (st == ScreenGrid.EMPTY) {
           s.append("__")
         }
       }

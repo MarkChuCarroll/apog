@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="967009af-138e-46dc-b14d-fdea788b7776" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/Rope.scala" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/Rope.scala" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/RopeSuite.scala" afterPath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeSuite.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/editor/EditorState.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/BufferOperation.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/UndoRecord.scala" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeBufferSuite.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala" afterPath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala" />
     </list>
     <ignored path="fuckme.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,80 +41,140 @@
     <favorites_list name="fuckme" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="plugins.sbt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RopeSuite.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeSuite.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-555">
-              <caret line="5" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Rope.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/Rope.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScreenGrid.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScreenGridSuite.scala" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding>
-                <element signature="e#32#80#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScreenGridController.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RopeBuffer.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="12" column="15" lean-forward="false" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="vertical" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="plugins.sbt" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="RopeSuite.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeSuite.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="204">
+                  <caret line="31" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Rope.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/Rope.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="75">
+                  <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ScreenGrid.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-313">
+                  <caret line="6" column="15" lean-forward="true" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ScreenGridSuite.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1065">
+                  <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#32#80#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ScreenGridController.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="270">
+                  <caret line="18" column="69" lean-forward="false" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="RopeBuffer.scala" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="240">
+                  <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#32#91#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="UndoRecord.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/UndoRecord.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="30">
+                  <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="EditorState.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/editor/EditorState.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="150">
+                  <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="RopeBufferSuite.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeBufferSuite.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="105">
+                  <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+                  <folding>
+                    <marker date="1482963139000" expanded="true" signature="96:1730" ph="{...}" />
+                    <marker date="1482963139000" expanded="true" signature="464:738" ph="(...)" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="RopeBufferSuite.scala" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeBufferSuite.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="184">
+                  <caret line="69" column="13" lean-forward="false" selection-start-line="69" selection-start-column="13" selection-end-line="69" selection-end-column="13" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Scala Trait" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -125,9 +187,18 @@
       <find>prin</find>
       <find>length</find>
       <find>print</find>
+      <find>BadPosition</find>
+      <find>NullUndo</find>
+      <find>move</find>
+      <find>BufferOperation</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Mark Chu-Carroll &lt;markcc@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -148,11 +219,15 @@
         <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/ChunkList.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/RopeSuite.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/Rope.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/Rope.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/editor/EditorState.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeBufferTest.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeBufferSuite.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/UndoRecord.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala" />
       </list>
     </option>
   </component>
@@ -264,6 +339,10 @@
               <option name="myItemId" value="apog" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rope" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -280,6 +359,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apog" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -309,41 +414,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apog" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apog" />
+              <option name="myItemId" value="rope" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apog" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ScreenGrid.scala" />
+              <option name="myItemId" value="UndoRecord.scala" />
               <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -421,6 +496,40 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="editor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EditorState.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="project" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -436,17 +545,33 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.goodmath.apog.rope" />
     </key>
   </component>
-  <component name="RunManager" selected="ScalaTest.ScreenGridSuite">
+  <component name="RunManager" selected="ScalaTest.RopeBufferSuite">
     <configuration default="false" name="RopeSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
       <setting name="path" value="org.goodmath.apog.RopeSpec" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="RopeBufferSuite" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="apog" />
+      <setting name="path" value="org.goodmath.apog.rope.RopeBufferSuite" />
       <setting name="package" value="" />
       <setting name="vmparams" value="" />
       <setting name="params" value="" />
@@ -722,13 +847,31 @@
       <envs />
       <method />
     </configuration>
-    <list size="2">
+    <configuration default="false" name="Unnamed" type="Specs2RunConfiguration" factoryName="Specs2">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="apog" />
+      <setting name="path" value="" />
+      <setting name="package" value="org.goodmath.apog" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="All in package" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="ScalaTest.ScreenGridSuite" />
-      <item index="1" class="java.lang.String" itemvalue="ScalaTest.RopeSpec" />
+      <item index="1" class="java.lang.String" itemvalue="Specs2.Unnamed" />
+      <item index="2" class="java.lang.String" itemvalue="ScalaTest.RopeSpec" />
+      <item index="3" class="java.lang.String" itemvalue="ScalaTest.RopeBufferSuite" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="ScalaTest.RopeSpec" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="ScalaTest.RopeBufferSuite" />
+        <item index="1" class="java.lang.String" itemvalue="ScalaTest.RopeSpec" />
       </list>
     </recent_temporary>
   </component>
@@ -786,38 +929,45 @@
       <option name="project" value="LOCAL" />
       <updated>1482544244439</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Starting to scaffold together a framework for rendering views. &#10;">
+      <created>1482714411545</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1482714411545</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 19h 58m 35s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.27 at 19h 49m 49s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 19h 59m 15s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.27 at 19h 51m 39s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 19h 59m 39s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.27 at 19h 52m 15s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 19h 59m 52s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.27 at 19h 53m 31s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 20h 01m 17s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.27 at 19h 53m 56s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 20h 02m 24s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.27 at 20h 29m 29s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 20h 02m 42s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.27 at 20h 30m 13s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 20h 03m 12s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.28 at 17h 11m 45s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 20h 03m 42s.xml">
-      <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
+    <history-entry file="RopeBufferSuite - 2016.12.28 at 17h 12m 28s.xml">
+      <configuration name="RopeBufferSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
-    <history-entry file="ScreenGridSuite - 2016.12.25 at 20h 04m 03s.xml">
+    <history-entry file="ScreenGridSuite - 2016.12.26 at 16h 09m 32s.xml">
       <configuration name="ScreenGridSuite" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
   </component>
@@ -835,7 +985,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30932203" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30932203" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -870,7 +1020,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added an in-place insert.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added an in-place insert.&#10;" />
+    <MESSAGE value="Starting to scaffold together a framework for rendering views. &#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Starting to scaffold together a framework for rendering views. &#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1017,10 +1168,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeSuite.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-555">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="18" column="69" lean-forward="false" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1065">
+          <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding>
+            <element signature="e#32#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-313">
+          <caret line="6" column="15" lean-forward="true" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/editor/EditorState.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1033,36 +1210,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeSuite.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
+        <state relative-caret-position="204">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeBufferSuite.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        <state relative-caret-position="105">
+          <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+          <folding>
+            <marker date="1482963139000" expanded="true" signature="96:1730" ph="{...}" />
+            <marker date="1482963139000" expanded="true" signature="464:738" ph="(...)" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/UndoRecord.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="12" column="15" lean-forward="false" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <element signature="e#32#80#0" expanded="true" />
+            <element signature="e#32#91#0" expanded="true" />
           </folding>
         </state>
       </provider>
