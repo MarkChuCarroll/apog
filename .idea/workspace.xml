@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="967009af-138e-46dc-b14d-fdea788b7776" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/editor/EditorState.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/BufferOperation.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/UndoRecord.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/rope/RopeBufferSuite.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/rope/RopeBuffer.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGrid.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala" afterPath="$PROJECT_DIR$/src/main/scala/org/goodmath/apog/view/ScreenGridController.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala" afterPath="$PROJECT_DIR$/src/test/scala/org/goodmath/apog/view/ScreenGridSuite.scala" />
     </list>
     <ignored path="fuckme.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -936,7 +928,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482714411545</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="* Basic view rendering framework with tests.&#10;* Cursor position methods in the RopeBuffer.&#10;* Named markes in RopeBuffer, following Java/Swing Document behavior.&#10;* Lots of added doc comments.&#10;">
+      <created>1482963855765</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1482963855765</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1021,7 +1020,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added an in-place insert.&#10;" />
     <MESSAGE value="Starting to scaffold together a framework for rendering views. &#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Starting to scaffold together a framework for rendering views. &#10;" />
+    <MESSAGE value="* Basic view rendering framework with tests.&#10;* Cursor position methods in the RopeBuffer.&#10;* Named markes in RopeBuffer, following Java/Swing Document behavior.&#10;* Lots of added doc comments.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="* Basic view rendering framework with tests.&#10;* Cursor position methods in the RopeBuffer.&#10;* Named markes in RopeBuffer, following Java/Swing Document behavior.&#10;* Lots of added doc comments.&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
