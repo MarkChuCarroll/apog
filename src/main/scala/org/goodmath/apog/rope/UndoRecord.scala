@@ -2,14 +2,8 @@ package org.goodmath.apog.rope
 
 import scala.collection.mutable.MutableList
 
-trait UndoRecord {
-  def buffer: RopeBuffer
+abstract class UndoRecord(val buffer: RopeBuffer) {
   def execute(): Unit
-
-  /**
-    * Return a flag indicating whether or not this undo operation actually does anything.
-    */
-  def isNoop: Boolean
 
   /**
     * Buffer operations will combine multiple undo operations into a single
@@ -21,42 +15,75 @@ trait UndoRecord {
     *         one of the input records. For example, an empty undo combined with any
     *         other undo will just return the other undo.
     */
-  def concat(next: UndoRecord): UndoRecord
+  def concat(next: UndoRecord): UndoRecord = {
+    val result = CompoundUndo(buffer)
+    result.addUndo(this)
+    result.addUndo(next)
+    result
+  }
 }
 
-case class NullUndo(override val buffer: RopeBuffer) extends UndoRecord {
+case class NullUndo(b: RopeBuffer) extends UndoRecord(b) {
   override def execute(): Unit = ()
 
   override def concat(next: UndoRecord): UndoRecord = next
-
-  /**
-    * Return a flag indicating whether or not this undo operation actually does anything.
-    */
-  override def isNoop: Boolean = true
 }
 
 
-class CompoundUndo(val buf: RopeBuffer) extends UndoRecord {
-  val steps: MutableList[UndoRecord] = new MutableList[UndoRecord]()
+case class CompoundUndo(b: RopeBuffer) extends UndoRecord(b) {
+  val steps: scala.collection.mutable.MutableList[UndoRecord] =
+    new scala.collection.mutable.MutableList[UndoRecord]()
+
+  def addUndo(u: UndoRecord): Unit = {
+    steps += u
+  }
 
   override def concat(next: UndoRecord): UndoRecord = {
     next match {
       case cu: CompoundUndo =>
         cu.steps.map { step => steps += step }
       case _ =>
-        steps += next
+        addUndo(next)
     }
     this
   }
-
-  override def buffer: RopeBuffer = buf
 
   override def execute(): Unit = {
     steps.foreach { step => step.execute() }
   }
 
-  /**
-    * Return a flag indicating whether or not this undo operation actually does anything.
-    */
-  override def isNoop: Boolean = false
+}
+
+case class UndoCursorMove(b: RopeBuffer, origPos: Int) extends UndoRecord(b) {
+  override def execute(): Unit = {
+    buffer.moveCursorTo(origPos)
+  }
+}
+
+case class UndoStepCursorForwards(b: RopeBuffer) extends UndoRecord(b) {
+  override def execute(): Unit = {
+    b.stepCursorBackwards()
+  }
+}
+
+case class UndoStepCursorBackwards(b: RopeBuffer) extends UndoRecord(b) {
+  override def execute(): Unit = {
+    b.stepCursorForwards()
+  }
+
+}
+
+case class UndoInsert(b: RopeBuffer, pos: Int, length: Int) extends UndoRecord(b) {
+  override def execute(): Unit = {
+    b.moveCursorTo(pos)
+    b.delete(length)
+  }
+
+}
+
+case class UndoDelete(b: RopeBuffer, pos: Int, deletedText: String) extends UndoRecord(b) {
+  override def execute(): Unit = {
+    b.moveCursorTo(pos)
+    b.insert(deletedText)
+  }
 }
